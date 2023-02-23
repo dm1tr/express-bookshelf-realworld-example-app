@@ -18,26 +18,24 @@ jobs:
   eslint:
     # имя для отображения в интерфейсе GitHub
     name: ESLint
-    # обязательный параметр, который указывает где будет запущена job: облачнный runner, self-hosted и т.д.
     runs-on: ubuntu-latest
+    container:
+      image: node:14.17.0-alpine
     # последовательные задачи (шаги), важно помнить, что переменные окружения не сохраняются
     # между шагами и их нужно пробрасывать, если требуется.
     steps:
       # указываем action, который будет запущен как часть job
       # В текущем случае это клонирование репозитория
       - uses: actions/checkout@v2
-      # Установка NVM
-      # имя для отображения в интерфейсе GitHub
-      - name: Install NVM
-        # команда для установки NVM из официального README.md NVM
-        run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.38.0/install.sh | bash
-      # Активируем NVM и устанавливаем нужную версию Node.js
-      - name: Install Node.js
-        # Мы ставим нужную версию в переменную окружения,
-        # которую NVM будет использовать
+      - name: "Use cache"
+        uses: action/cache@v2
         env:
-          NODE_VERSION: 14.17.0
-        run: export NVM_DIR="$HOME/.nvm" && . "$NVM_DIR/nvm.sh" --no-use && nvm install
+          cache-name: npm-${{ hashFiles('package-lock.json') }}
+        with:
+          path: ~/npm
+          key: ${{ env.cache-name }}
+          restore-key: |
+            ${{ env.cache-name }}
       # Установка зависимостей проекта
       - name: Install dependencies
         run: npm install
