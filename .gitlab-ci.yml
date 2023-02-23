@@ -3,8 +3,6 @@ stages:
 
 eslint:
   image: node:14.17.0-alpine
-  services:
-    - name: ci-cd-docker
   stage: lint
   script:
     - npm install
@@ -12,8 +10,6 @@ eslint:
 
 prettier:
   image: node:14.17.0-alpine
-  services:
-    - name: ci-cd-docker
   stage: lint
   script:
     - npm install
