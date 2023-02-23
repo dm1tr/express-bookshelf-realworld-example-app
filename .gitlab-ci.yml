@@ -1,5 +1,5 @@
 stages:
-  - "lint"
+  - 'lint'
 
 eslint:
   image: node:14.17.0-alpine
