@@ -54,7 +54,7 @@ jobs:
       # В текущем случае это клонирование репозитория
       - uses: actions/checkout@v2
       - name: 'Use cache'
-        uses: action/cache@v2
+        uses: actions/cache@v2
         env:
           cache-name: npm-${{ hashFiles('package-lock.json') }}
         with:
