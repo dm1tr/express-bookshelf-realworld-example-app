@@ -27,8 +27,8 @@ jobs:
       # указываем action, который будет запущен как часть job
       # В текущем случае это клонирование репозитория
       - uses: actions/checkout@v2
-      - name: "Use cache"
-        uses: action/cache@v2
+      - name: 'Use cache'
+        uses: actions/cache@v2
         env:
           cache-name: npm-${{ hashFiles('package-lock.json') }}
         with:
@@ -53,6 +53,15 @@ jobs:
       # указываем action, который будет запущен как часть job
       # В текущем случае это клонирование репозитория
       - uses: actions/checkout@v2
+      - name: 'Use cache'
+        uses: action/cache@v2
+        env:
+          cache-name: npm-${{ hashFiles('package-lock.json') }}
+        with:
+          path: ~/npm
+          key: ${{ env.cache-name }}
+          restore-key: |
+            ${{ env.cache-name }}
       # Установка NVM
       # имя для отображения в интерфейсе GitHub
       - name: Install NVM
